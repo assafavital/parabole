@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><!DOCTYPE html>
+        <html lang="en">
+        <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Parabole - Daily Quadratic Game</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        #gameContainer {
+            width: 80%;
+            max-width: 600px;
+        }
+        input {
+            width: 50px;
+            margin: 5px;
+        }
+        #hints {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div id="gameContainer">
+    <h1>Parabole</h1>
+    <p>Daily Quadratic Formula Game</p>
+    <canvas id="quadraticChart"></canvas>
+    <div id="guessContainer">
+        <input type="number" id="guessA" placeholder="a">
+        <input type="number" id="guessB" placeholder="b">
+        <input type="number" id="guessC" placeholder="c">
+        <button onclick="checkGuess()">Submit Guess</button>
+    </div>
+    <div id="hints"></div>
+    <div id="attempts">Attempts: 0</div>
+</div>
+
+<script>
+    let a, b, c;
+    let attempts = 0;
+    let chart;
+
+    function generateCoefficients() {
+        const today = new Date();
+        const seed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
+
+        // Use the seeded random number generator
+        const rng = new window.Math.seedrandom(seed);
+
+        a = Math.floor(rng() * 21) - 10; // -10 to 10
+        b = Math.floor(rng() * 41) - 20; // -20 to 20
+        c = Math.floor(rng() * 101) - 50; // -50 to 50
+
+        // Ensure 'a' is not zero
+        if (a === 0) a = 1;
+    }
+
+    function plotQuadratic() {
+        const ctx = document.getElementById('quadraticChart').getContext('2d');
+        const xValues = Array.from({length: 201}, (_, i) => (i - 100) / 10);
+        const yValues = xValues.map(x => a * x * x + b * x + c);
+
+        if (chart) {
+            chart.destroy();
+        }
+
+        chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: xValues,
+                datasets: [{
+                    label: 'Quadratic Function',
+                    data: yValues,
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        type: 'linear',
+                        position: 'center',
+                        title: {
+                            display: true,
+                            text: 'x'
+                        }
+                    },
+                    y: {
+                        type: 'linear',
+                        position: 'center',
+                        title: {
+                            display: true,
+                            text: 'y'
+                        }
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Parabole: y = ax² + bx + c'
+                    }
+                }
+            }
+        });
+    }
+
+    function checkGuess() {
+        attempts++;
+        const guessA = parseInt(document.getElementById('guessA').value);
+        const guessB = parseInt(document.getElementById('guessB').value);
+        const guessC = parseInt(document.getElementById('guessC').value);
+
+        let hints = [];
+        hints.push(guessA === a ? "a is correct" : `a is ${guessA < a ? 'larger' : 'smaller'}`);
+        hints.push(guessB === b ? "b is correct" : `b is ${guessB < b ? 'larger' : 'smaller'}`);
+        hints.push(guessC === c ? "c is correct" : `c is ${guessC < c ? 'larger' : 'smaller'}`);
+
+        document.getElementById('hints').innerHTML = hints.join('<br>');
+        document.getElementById('attempts').textContent = `Attempts: ${attempts}`;
+
+        if (guessA === a && guessB === b && guessC === c) {
+            alert(`Congratulations! You've solved today's Parabole: ${a}x² + ${b}x + ${c}\nYou solved it in ${attempts} attempts.`);
+        }
+    }
+
+    // Initialize the game when the window has fully loaded
+    window.onload = function() {
+        if (typeof window.Math.seedrandom === 'function') {
+            generateCoefficients();
+            plotQuadratic();
+        } else {
+            console.error('seedrandom library not loaded properly');
+            document.getElementById('hints').innerHTML = 'Error: Game could not be initialized. Please try refreshing the page.';
+        }
+    };
+</script>
+</body>
+</html></title>
+</head>
+<body>
+
+</body>
+</html>
