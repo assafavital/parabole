@@ -1,3 +1,5 @@
+import {loadState, saveState} from "./state";
+
 let a, b, c;
 let attempts = 0;
 let chart;

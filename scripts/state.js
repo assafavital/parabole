@@ -1,4 +1,4 @@
-class State {
+export class State {
     constructor(s = {}) {
         this.todaySolved = s.todaySolved;
         this.streak = s.streak;
@@ -7,11 +7,11 @@ class State {
     }
 }
 
-function saveState(state) {
+export function saveState(state) {
     localStorage.setItem('state', JSON.stringify(state));
 }
 
-function loadState(): State {
+export function loadState(): State {
     const state = localStorage.getItem('state');
     return state ? JSON.parse(state) : {};
 }
