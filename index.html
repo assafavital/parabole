@@ -2,14 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title><!DOCTYPE html>
-        <html lang="en">
-        <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Parabole - Daily Quadratic Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parabole - Daily Quadratic Game</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -17,52 +14,124 @@
             flex-direction: column;
             align-items: center;
             padding: 20px;
+            background-color: #f0f0f0;
         }
         #gameContainer {
             width: 80%;
             max-width: 600px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        #guessContainer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .coefficient-input {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .coefficient-input label {
+            font-weight: bold;
+            margin-bottom: 5px;
         }
         input {
-            width: 50px;
-            margin: 5px;
+            width: 60px;
+            padding: 5px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
         }
         #hints {
-            margin-top: 10px;
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-around;
+        }
+        .hint {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .hint-icon {
+            font-size: 24px;
+            margin-top: 5px;
+        }
+        #attempts, #stats, #countdown {
+            margin-top: 15px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
 <div id="gameContainer">
     <h1>Parabole</h1>
-    <p>Daily Quadratic Formula Game</p>
+    <p style="text-align: center;">Daily Quadratic Formula Game</p>
     <canvas id="quadraticChart"></canvas>
     <div id="guessContainer">
-        <input type="number" id="guessA" placeholder="a">
-        <input type="number" id="guessB" placeholder="b">
-        <input type="number" id="guessC" placeholder="c">
+        <div class="coefficient-input">
+            <label for="guessA">a</label>
+            <input type="number" id="guessA" placeholder="a">
+        </div>
+        <div class="coefficient-input">
+            <label for="guessB">b</label>
+            <input type="number" id="guessB" placeholder="b">
+        </div>
+        <div class="coefficient-input">
+            <label for="guessC">c</label>
+            <input type="number" id="guessC" placeholder="c">
+        </div>
         <button onclick="checkGuess()">Submit Guess</button>
     </div>
     <div id="hints"></div>
     <div id="attempts">Attempts: 0</div>
+    <div id="stats"></div>
+    <div id="countdown"></div>
 </div>
 
 <script>
     let a, b, c;
     let attempts = 0;
     let chart;
+    let gameState = {
+        todaySolved: false,
+        streak: 0,
+        totalPlayed: 0,
+        totalSolved: 0
+    };
 
     function generateCoefficients() {
         const today = new Date();
         const seed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
 
-        // Use the seeded random number generator
         const rng = new window.Math.seedrandom(seed);
 
         a = Math.floor(rng() * 21) - 10; // -10 to 10
         b = Math.floor(rng() * 41) - 20; // -20 to 20
         c = Math.floor(rng() * 101) - 50; // -50 to 50
 
-        // Ensure 'a' is not zero
         if (a === 0) a = 1;
     }
 
@@ -89,67 +158,101 @@
             options: {
                 responsive: true,
                 scales: {
-                    x: {
-                        type: 'linear',
-                        position: 'center',
-                        title: {
-                            display: true,
-                            text: 'x'
-                        }
-                    },
-                    y: {
-                        type: 'linear',
-                        position: 'center',
-                        title: {
-                            display: true,
-                            text: 'y'
-                        }
-                    }
+                    x: { type: 'linear', position: 'center', title: { display: true, text: 'x' } },
+                    y: { type: 'linear', position: 'center', title: { display: true, text: 'y' } }
                 },
                 plugins: {
-                    title: {
-                        display: true,
-                        text: 'Parabole: y = ax² + bx + c'
-                    }
+                    title: { display: true, text: 'Parabole: y = ax² + bx + c' }
                 }
             }
         });
     }
 
     function checkGuess() {
+        if (gameState.todaySolved) {
+            alert("You've already solved today's Parabole. Refresh the page for a new puzzle!");
+            return;
+        }
+
         attempts++;
         const guessA = parseInt(document.getElementById('guessA').value);
         const guessB = parseInt(document.getElementById('guessB').value);
         const guessC = parseInt(document.getElementById('guessC').value);
 
-        let hints = [];
-        hints.push(guessA === a ? "a is correct" : `a is ${guessA < a ? 'larger' : 'smaller'}`);
-        hints.push(guessB === b ? "b is correct" : `b is ${guessB < b ? 'larger' : 'smaller'}`);
-        hints.push(guessC === c ? "c is correct" : `c is ${guessC < c ? 'larger' : 'smaller'}`);
+        let hints = '';
+        hints += getHintHTML('a', guessA, a);
+        hints += getHintHTML('b', guessB, b);
+        hints += getHintHTML('c', guessC, c);
 
-        document.getElementById('hints').innerHTML = hints.join('<br>');
+        document.getElementById('hints').innerHTML = hints;
         document.getElementById('attempts').textContent = `Attempts: ${attempts}`;
 
         if (guessA === a && guessB === b && guessC === c) {
+            gameState.todaySolved = true;
+            gameState.streak++;
+            gameState.totalPlayed++;
+            gameState.totalSolved++;
+            updateStats();
             alert(`Congratulations! You've solved today's Parabole: ${a}x² + ${b}x + ${c}\nYou solved it in ${attempts} attempts.`);
         }
     }
 
-    // Initialize the game when the window has fully loaded
+    function getHintHTML(coefficient, guess, actual) {
+        let iconClass, color;
+        if (guess === actual) {
+            iconClass = 'fa-check';
+            color = 'green';
+        } else if (guess < actual) {
+            iconClass = 'fa-arrow-up';
+            color = 'red';
+        } else {
+            iconClass = 'fa-arrow-down';
+            color = 'blue';
+        }
+        return `
+            <div class="hint">
+                <span>${coefficient}</span>
+                <i class="hint-icon fas ${iconClass}" style="color: ${color};"></i>
+            </div>
+        `;
+    }
+
+    function updateStats() {
+        const statsDiv = document.getElementById('stats');
+        statsDiv.innerHTML = `
+            Streak: ${gameState.streak}<br>
+            Win %: ${Math.round((gameState.totalSolved / gameState.totalPlayed) * 100) || 0}%<br>
+            Total Played: ${gameState.totalPlayed}
+        `;
+    }
+
+    function updateCountdown() {
+        const now = new Date();
+        const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+        const timeLeft = tomorrow - now;
+        const hours = Math.floor(timeLeft / (1000 * 60 * 60));
+        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+        document.getElementById('countdown').textContent = `Next Parabole in: ${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    function initializeGame() {
+        generateCoefficients();
+        plotQuadratic();
+        updateStats();
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    }
+
     window.onload = function() {
         if (typeof window.Math.seedrandom === 'function') {
-            generateCoefficients();
-            plotQuadratic();
+            initializeGame();
         } else {
             console.error('seedrandom library not loaded properly');
             document.getElementById('hints').innerHTML = 'Error: Game could not be initialized. Please try refreshing the page.';
         }
     };
 </script>
-</body>
-</html></title>
-</head>
-<body>
-
 </body>
 </html>
