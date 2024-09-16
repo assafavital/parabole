@@ -10,6 +10,9 @@
     <link rel="stylesheet" type="text/css" href="styles.css"/>
 </head>
 <body>
+<script type="module" src="scripts/state.js"></script>
+<script type="module" src="scripts/script.js"></script>
+
 <div id="gameContainer">
     <h1>Parabole</h1>
     <p style="text-align: center;">Daily Quadratic Formula Game</p>
@@ -27,7 +30,7 @@
             <label for="guessC">c</label>
             <input type="number" id="guessC" placeholder="c">
         </div>
-        <button onclick="checkGuess()">Submit Guess</button>
+        <button id="guess">Submit Guess</button>
     </div>
     <div id="hints"></div>
     <div id="attempts">Attempts: 0</div>
@@ -35,6 +38,5 @@
     <div id="countdown"></div>
 </div>
 
-<script src="scripts/script.js"></script>
 </body>
 </html>

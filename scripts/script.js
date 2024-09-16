@@ -1,4 +1,4 @@
-import {loadState, saveState} from "./state";
+import {loadState, saveState} from "./state.js";
 
 let a, b, c;
 let attempts = 0;
@@ -137,3 +137,5 @@ window.onload = function () {
         document.getElementById('hints').innerHTML = 'Error: Game could not be initialized. Please try refreshing the page.';
     }
 };
+
+document.querySelector('#guess').addEventListener('click', checkGuess)
