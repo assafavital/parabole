@@ -139,3 +139,9 @@ window.onload = function () {
 };
 
 document.querySelector('#guess').addEventListener('click', checkGuess)
+
+if (state != null && state.todaySolved) {
+    document.getElementById("guessContainer").style.display = 'none';
+    document.getElementById("attempts").style.display = 'none';
+    document.getElementById("alreadySolved").style.display = 'flex';
+}
