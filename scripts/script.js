@@ -1,12 +1,7 @@
 let a, b, c;
 let attempts = 0;
 let chart;
-let gameState = {
-    todaySolved: false,
-    streak: 0,
-    totalPlayed: 0,
-    totalSolved: 0
-};
+let state = loadState();
 
 function generateCoefficients() {
     const today = new Date();
@@ -55,7 +50,7 @@ function plotQuadratic() {
 }
 
 function checkGuess() {
-    if (gameState.todaySolved) {
+    if (state.todaySolved) {
         alert("You've already solved today's Parabole. Refresh the page for a new puzzle!");
         return;
     }
@@ -74,10 +69,10 @@ function checkGuess() {
     document.getElementById('attempts').textContent = `Attempts: ${attempts}`;
 
     if (guessA === a && guessB === b && guessC === c) {
-        gameState.todaySolved = true;
-        gameState.streak++;
-        gameState.totalPlayed++;
-        gameState.totalSolved++;
+        state.todaySolved = true;
+        state.streak++;
+        state.totalPlayed++;
+        state.totalSolved++;
         updateStats();
         alert(`Congratulations! You've solved today's Parabole: ${a}x² + ${b}x + ${c}\nYou solved it in ${attempts} attempts.`);
     }
@@ -106,10 +101,11 @@ function getHintHTML(coefficient, guess, actual) {
 function updateStats() {
     const statsDiv = document.getElementById('stats');
     statsDiv.innerHTML = `
-            Streak: ${gameState.streak}<br>
-            Win %: ${Math.round((gameState.totalSolved / gameState.totalPlayed) * 100) || 0}%<br>
-            Total Played: ${gameState.totalPlayed}
+            Streak: ${state.streak}<br>
+            Win %: ${Math.round((state.totalSolved / state.totalPlayed) * 100) || 0}%<br>
+            Total Played: ${state.totalPlayed}
         `;
+    saveState(state);
 }
 
 function updateCountdown() {
