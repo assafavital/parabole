@@ -1,4 +1,5 @@
 import {loadState, saveState, todaySolved} from "./state.js";
+import 'toastr';
 
 let a, b, c;
 let attempts = 0;
@@ -52,10 +53,15 @@ function plotQuadratic() {
 }
 
 function checkGuess() {
-    attempts++;
     const guessA = parseInt(document.getElementById('guessA').value);
     const guessB = parseInt(document.getElementById('guessB').value);
     const guessC = parseInt(document.getElementById('guessC').value);
+    if (isNaN(guessA) || isNaN(guessB) || isNaN(guessC)) {
+        toastr.error('Guesses must be valid integers.')
+        return
+    }
+
+    attempts++;
 
     let hints = '';
     hints += getHintHTML('a', guessA, a);
@@ -133,7 +139,10 @@ window.onload = function () {
     }
 };
 
-document.querySelector('#guess').addEventListener('click', checkGuess)
+document.querySelector('#guess').addEventListener('click', e => {
+    e.preventDefault();
+    checkGuess();
+})
 
 if (todaySolved(state)) {
     document.getElementById("guessContainer").style.display = 'none';
