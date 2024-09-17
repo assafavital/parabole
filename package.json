@@ -4,7 +4,7 @@
   "description": "Daily Quadratic Game",
   "scripts": {
     "start": "parcel ./build/*.html",
-    "build": "parcel build ./build/*.html"
+    "build": "parcel build ./build/*.html --no-scope-hoist"
   },
   "repository": {
     "type": "git",
