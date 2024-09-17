@@ -23,12 +23,20 @@ h1 {
 
 #guessContainer {
     display: flex;
+    flex-direction: column;
+    gap: 10px;
     justify-content: space-between;
     align-items: center;
     margin-top: 20px;
     background-color: #f9f9f9;
     padding: 15px;
     border-radius: 5px;
+}
+
+#inputs {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
 }
 
 #alreadySolved {
@@ -46,6 +54,7 @@ h1 {
 .coefficient-input {
     display: flex;
     flex-direction: column;
+    flex: 1;
     align-items: center;
 }
 
@@ -55,6 +64,7 @@ h1 {
 }
 
 input {
+    flex: 1;
     width: 60px;
     padding: 5px;
     text-align: center;
@@ -70,6 +80,8 @@ button {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+    flex-basis: 100%;
+    margin-top: 10px;
 }
 
 button:hover {
@@ -96,4 +108,19 @@ button:hover {
 #attempts, #stats, #countdown {
     margin-top: 15px;
     text-align: center;
+}
+
+#quadraticChart {
+    display: flex;
+    flex-direction: column;
+    overflow-wrap: break-word;
+}
+
+#subtitleHint {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-size: small;
+    font-style: italic;
 }

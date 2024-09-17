@@ -1,6 +1,7 @@
 import {loadState, saveState, todaySolved} from "./state.js";
-import functionPlot from "function-plot";
 import 'toastr';
+import {readGuessesSafely} from "./inputValidation";
+import {plotQuadratic} from "./plot";
 
 let a, b, c;
 let attempts = 0;
@@ -19,33 +20,13 @@ function generateCoefficients() {
     if (a === 0) a = 1;
 }
 
-function plotQuadratic() {
-    functionPlot({
-        target: "#quadraticChart",
-        xAxis: {
-            domain: [-10, 10]
-        },
-        yAxis: {
-            domain: [-c, c]
-        },
-        grid: true,
-        data: [
-            {
-                fn: `${a} * x^2 + ${b} * x + ${c}`
-            }
-        ]
-    })
-}
-
 function checkGuess() {
-    const guessA = parseInt(document.getElementById('guessA').value);
-    const guessB = parseInt(document.getElementById('guessB').value);
-    const guessC = parseInt(document.getElementById('guessC').value);
-    if (isNaN(guessA) || isNaN(guessB) || isNaN(guessC)) {
-        toastr.error('Guesses must be valid integers.')
+    let guesses = readGuessesSafely();
+    if (guesses === null) {
         return
     }
 
+    let [guessA, guessB, guessC] = guesses;
     attempts++;
 
     let hints = '';
@@ -109,10 +90,13 @@ function updateCountdown() {
 
 function initializeGame() {
     generateCoefficients();
-    plotQuadratic();
+    plotQuadratic(a, b, c);
     updateStats();
     updateCountdown();
     setInterval(updateCountdown, 1000);
+    window.onresize = () => {
+        plotQuadratic(a, b, c);
+    };
 }
 
 window.onload = function () {
