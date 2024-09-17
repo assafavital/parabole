@@ -1,9 +1,9 @@
 import {loadState, saveState, todaySolved} from "./state.js";
+import functionPlot from "function-plot";
 import 'toastr';
 
 let a, b, c;
 let attempts = 0;
-let chart;
 let state = loadState();
 
 function generateCoefficients() {
@@ -20,36 +20,21 @@ function generateCoefficients() {
 }
 
 function plotQuadratic() {
-    const ctx = document.getElementById('quadraticChart').getContext('2d');
-    const xValues = Array.from({length: 201}, (_, i) => (i - 100) / 10);
-    const yValues = xValues.map(x => a * x * x + b * x + c);
-
-    if (chart) {
-        chart.destroy();
-    }
-
-    chart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: xValues,
-            datasets: [{
-                label: 'Quadratic Function',
-                data: yValues,
-                borderColor: 'rgb(75, 192, 192)',
-                tension: 0.1
-            }]
+    functionPlot({
+        target: "#quadraticChart",
+        xAxis: {
+            domain: [-10, 10]
         },
-        options: {
-            responsive: true,
-            scales: {
-                x: {type: 'linear', position: 'center', title: {display: true, text: 'x'}},
-                y: {type: 'linear', position: 'center', title: {display: true, text: 'y'}}
-            },
-            plugins: {
-                title: {display: true, text: 'Parabole: y = ax² + bx + c'}
+        yAxis: {
+            domain: [-c, c]
+        },
+        grid: true,
+        data: [
+            {
+                fn: `${a} * x^2 + ${b} * x + ${c}`
             }
-        }
-    });
+        ]
+    })
 }
 
 function checkGuess() {

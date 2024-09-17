@@ -14,14 +14,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Parabole - Daily Quadratic Game</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/function-plot/1.25.0/function-plot.js" integrity="sha512-7MI0msHrbnIetu1m53ACfA0Hu0t12NG8yyrVzjSqABYJglzbwYa97UoFzd74rB1bwY7Na850s+cg+5YuWE+TDA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="styles.css"/>
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 </head>
 <body>
 <script type="module" src="state.js"></script>
@@ -30,7 +29,7 @@
 <div id="gameContainer">
     <h1>Parabole</h1>
     <p style="text-align: center;">Daily Quadratic Formula Game</p>
-    <canvas id="quadraticChart"></canvas>
+    <div id="quadraticChart"></div>
     <div id="guessContainer">
         <div class="coefficient-input">
             <label for="guessA">a</label>
