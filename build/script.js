@@ -1,4 +1,4 @@
-import {loadState, saveState} from "./state.js";
+import {loadState, saveState, todaySolved} from "./state.js";
 
 let a, b, c;
 let attempts = 0;
@@ -71,7 +71,7 @@ function checkGuess() {
     document.getElementById('attempts').textContent = `Attempts: ${attempts}`;
 
     if (guessA === a && guessB === b && guessC === c) {
-        state.todaySolved = true;
+        state.lastSolved = new Date();
         state.streak++;
         state.totalPlayed++;
         state.totalSolved++;
@@ -140,7 +140,7 @@ window.onload = function () {
 
 document.querySelector('#guess').addEventListener('click', checkGuess)
 
-if (state != null && state.todaySolved) {
+if (todaySolved(state)) {
     document.getElementById("guessContainer").style.display = 'none';
     document.getElementById("attempts").style.display = 'none';
     document.getElementById("alreadySolved").style.display = 'flex';
