@@ -1,7 +1,7 @@
 import {loadState, saveState, todaySolved} from "./state.js";
-import functionPlot from "function-plot";
 import 'toastr';
 import {readGuessesSafely} from "./inputValidation";
+import {plotQuadratic} from "./plot";
 
 let a, b, c;
 let attempts = 0;
@@ -18,24 +18,6 @@ function generateCoefficients() {
     c = Math.floor(rng() * 101) - 50; // -50 to 50
 
     if (a === 0) a = 1;
-}
-
-function plotQuadratic() {
-    functionPlot({
-        target: "#quadraticChart",
-        xAxis: {
-            domain: [-10, 10]
-        },
-        yAxis: {
-            domain: [-c, c]
-        },
-        grid: true,
-        data: [
-            {
-                fn: `${a} * x^2 + ${b} * x + ${c}`
-            }
-        ]
-    })
 }
 
 function checkGuess() {
@@ -108,7 +90,7 @@ function updateCountdown() {
 
 function initializeGame() {
     generateCoefficients();
-    plotQuadratic();
+    plotQuadratic(a, b, c);
     updateStats();
     updateCountdown();
     setInterval(updateCountdown, 1000);
