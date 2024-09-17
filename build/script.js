@@ -1,6 +1,7 @@
 import {loadState, saveState, todaySolved} from "./state.js";
 import functionPlot from "function-plot";
 import 'toastr';
+import {readGuessesSafely} from "./inputValidation";
 
 let a, b, c;
 let attempts = 0;
@@ -38,14 +39,12 @@ function plotQuadratic() {
 }
 
 function checkGuess() {
-    const guessA = parseInt(document.getElementById('guessA').value);
-    const guessB = parseInt(document.getElementById('guessB').value);
-    const guessC = parseInt(document.getElementById('guessC').value);
-    if (isNaN(guessA) || isNaN(guessB) || isNaN(guessC)) {
-        toastr.error('Guesses must be valid integers.')
+    let guesses = readGuessesSafely();
+    if (guesses === null) {
         return
     }
 
+    let [guessA, guessB, guessC] = guesses;
     attempts++;
 
     let hints = '';
