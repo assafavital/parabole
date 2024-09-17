@@ -20,7 +20,7 @@ jobs:
       - name: Install and Build
         run: |
           npm install
-          npm run build -- --public-url ./pr-preview/pr-${{ github.event.number }}
+          npm run build -- --public-url https://parabole.servegame.com/pr-preview/pr-${{ github.event.number }}
 
       - name: Deploy preview
         if: github.event.action != 'closed'
