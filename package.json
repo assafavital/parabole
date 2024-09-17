@@ -11,9 +11,11 @@
     "url": "https://github.com/assafavital/parabole.git"
   },
   "devDependencies": {
+    "buffer": "^6.0.3",
     "parcel": "^2.12.0"
   },
   "dependencies": {
+    "function-plot": "^1.25.0",
     "toastr": "^2.1.4"
   }
 }
