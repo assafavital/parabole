@@ -94,6 +94,9 @@ function initializeGame() {
     updateStats();
     updateCountdown();
     setInterval(updateCountdown, 1000);
+    window.onresize = () => {
+        plotQuadratic(a, b, c);
+    };
 }
 
 window.onload = function () {

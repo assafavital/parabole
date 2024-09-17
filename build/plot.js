@@ -1,11 +1,12 @@
 import functionPlot from "function-plot";
 
-const plotTarget = "#quadraticChart";
+const plotTarget = "quadraticChart";
 const yDomainMargin = 5;
 
 export function plotQuadratic(a, b, c) {
     functionPlot({
-        target: plotTarget,
+        target: `#${plotTarget}`,
+        width: document.getElementById("guessContainer").offsetWidth,
         xAxis: {
             label: 'x',
             domain: [-10, 10]

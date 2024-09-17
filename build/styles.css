@@ -97,3 +97,9 @@ button:hover {
     margin-top: 15px;
     text-align: center;
 }
+
+#quadraticChart {
+    display: flex;
+    flex-direction: column;
+    overflow-wrap: break-word;
+}
