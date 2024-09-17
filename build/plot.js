@@ -6,7 +6,7 @@ const yDomainMargin = 5;
 export function plotQuadratic(a, b, c) {
     functionPlot({
         target: `#${plotTarget}`,
-        width: document.getElementById("guessContainer").offsetWidth,
+        width: document.getElementById("quadraticChart").offsetWidth,
         xAxis: {
             label: 'x',
             domain: [-10, 10]
