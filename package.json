@@ -1,0 +1,16 @@
+{
+  "name": "parabole",
+  "version": "1.0.0",
+  "description": "Daily Quadratic Game",
+  "scripts": {
+    "start": "parcel ./build/*.html",
+    "build": "parcel build ./build/*.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/assafavital/parabole.git"
+  },
+  "devDependencies": {
+    "parcel": "^2.12.0"
+  }
+}
