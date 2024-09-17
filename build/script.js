@@ -47,8 +47,8 @@ function checkGuess() {
         if (navigator.share) {
             navigator.share({
                 title: 'Parabole',
-                text: "I completed today's Parabole!",
-                url: window.location.href,
+                text: `I completed today's Parabole in ${attempts} attempts!
+                Play now 📈 https://parabole.servegame.com/`,
             }).then(console.log).catch(console.error)
         }
     }
