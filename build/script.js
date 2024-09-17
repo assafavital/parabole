@@ -52,11 +52,6 @@ function plotQuadratic() {
 }
 
 function checkGuess() {
-    if (state.todaySolved) {
-        alert("You've already solved today's Parabole. Refresh the page for a new puzzle!");
-        return;
-    }
-
     attempts++;
     const guessA = parseInt(document.getElementById('guessA').value);
     const guessB = parseInt(document.getElementById('guessB').value);
