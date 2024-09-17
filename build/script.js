@@ -53,10 +53,15 @@ function plotQuadratic() {
 }
 
 function checkGuess() {
+    const guessA = parseInt(document.getElementById('guessA').value);
+    const guessB = parseInt(document.getElementById('guessB').value);
+    const guessC = parseInt(document.getElementById('guessC').value);
+    if (isNaN(guessA) || isNaN(guessB) || isNaN(guessC)) {
+        toastr.error('Guesses must be valid integers.')
+        return
+    }
+
     attempts++;
-    const guessA = parseInt(document.getElementById('guessA').value) || 0;
-    const guessB = parseInt(document.getElementById('guessB').value) || 0;
-    const guessC = parseInt(document.getElementById('guessC').value) || 0;
 
     let hints = '';
     hints += getHintHTML('a', guessA, a);
