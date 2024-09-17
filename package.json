@@ -3,13 +3,14 @@
   "version": "1.0.0",
   "description": "Daily Quadratic Game",
   "scripts": {
-    "build": "live-server build"
+    "start": "parcel ./build/*.html",
+    "build": "parcel build ./build/*.html"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/assafavital/parabole.git"
   },
-  "dependencies": {
-    "live-server": "^1.2.2"
+  "devDependencies": {
+    "parcel": "^2.12.0"
   }
 }
