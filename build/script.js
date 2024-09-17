@@ -1,4 +1,5 @@
 import {loadState, saveState, todaySolved} from "./state.js";
+import 'toastr';
 
 let a, b, c;
 let attempts = 0;
@@ -133,7 +134,10 @@ window.onload = function () {
     }
 };
 
-document.querySelector('#guess').addEventListener('click', checkGuess)
+document.querySelector('#guess').addEventListener('click', e => {
+    e.preventDefault();
+    checkGuess();
+})
 
 if (todaySolved(state)) {
     document.getElementById("guessContainer").style.display = 'none';
