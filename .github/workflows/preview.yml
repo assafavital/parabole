@@ -6,6 +6,7 @@ on:
       - opened
       - reopened
       - synchronize
+      - closed
 
 concurrency: preview-${{ github.ref }}
 
@@ -22,8 +23,16 @@ jobs:
           npm run build
 
       - name: Deploy preview
+        if: github.event.action != 'closed'
         uses: rossjrw/pr-preview-action@v1
         with:
           umbrella-dir: pr-preview
           action: auto
-          source-dir: ./build/
+          source-dir: dist
+
+      - name: Cleanup deployment
+        if: github.event.action == 'closed' || github.event.pull_request.merged
+        with:
+          umbrella-dir: pr-preview
+          action: remove
+          source-dir: dist
