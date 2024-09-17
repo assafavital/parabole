@@ -105,9 +105,18 @@ button:hover {
     margin-top: 5px;
 }
 
-#attempts, #stats, #countdown {
+#attempts {
+    display: flex;
     margin-top: 15px;
     text-align: center;
+    justify-content: center;
+}
+
+#stats, #countdown {
+    display: none;
+    margin-top: 15px;
+    text-align: center;
+    justify-content: center;
 }
 
 #quadraticChart {

@@ -35,15 +35,15 @@ function checkGuess() {
     hints += getHintHTML('c', guessC, c);
 
     document.getElementById('hints').innerHTML = hints;
-    document.getElementById('attempts').textContent = `Attempts: ${attempts}`;
+    document.getElementById('attempts').textContent = `Today attempts: ${attempts}`;
 
     if (guessA === a && guessB === b && guessC === c) {
         state.lastSolved = new Date();
-        state.streak++;
         state.totalPlayed++;
-        state.totalSolved++;
+        state.totalAttempts += attempts;
         updateStats();
-        alert(`Congratulations! You've solved today's Parabole: ${a}x² + ${b}x + ${c}\nYou solved it in ${attempts} attempts.`);
+        toggleVisibility(true)
+        toastr.success(`Congratulations! You've solved today's Parabole: ${a}x² + ${b}x + ${c}\nYou solved it in ${attempts} attempts.`);
     }
 }
 
@@ -70,8 +70,7 @@ function getHintHTML(coefficient, guess, actual) {
 function updateStats() {
     const statsDiv = document.getElementById('stats');
     statsDiv.innerHTML = `
-            Streak: ${state.streak}<br>
-            Win %: ${Math.round((state.totalSolved / state.totalPlayed) * 100) || 0}%<br>
+            Avg. Attempts: ${Math.round(100 * state.totalAttempts / state.totalPlayed) / 100}<br>
             Total Played: ${state.totalPlayed}
         `;
     saveState(state);
@@ -113,8 +112,14 @@ document.querySelector('#guess').addEventListener('click', e => {
     checkGuess();
 })
 
-if (todaySolved(state)) {
-    document.getElementById("guessContainer").style.display = 'none';
-    document.getElementById("attempts").style.display = 'none';
-    document.getElementById("alreadySolved").style.display = 'flex';
+function toggleVisibility(finished) {
+    document.getElementById("guessContainer").style.display = finished ? 'none' : 'flex';
+    document.getElementById('hints').style.display = finished ? 'none' : 'flex';
+    document.getElementById("attempts").style.display = finished ? 'none' : 'flex';
+
+    document.getElementById("alreadySolved").style.display = finished ? 'flex' : 'none';
+    document.getElementById('stats').style.display = finished ? 'flex' : 'none';
+    document.getElementById('countdown').style.display = finished ? 'flex' : 'none';
 }
+
+toggleVisibility(todaySolved(state));
