@@ -24,13 +24,14 @@ jobs:
 
       - name: Deploy preview
         if: github.event.action != 'closed'
-        uses: rossjrw/pr-preview-action@v1
+        uses: rossjrw/pr-preview-action@v1.4.7
         with:
           umbrella-dir: pr-preview
           action: auto
           source-dir: dist
 
       - name: Cleanup deployment
+        uses: rossjrw/pr-preview-action@v1.4.7
         if: github.event.action == 'closed' || github.event.pull_request.merged
         with:
           umbrella-dir: pr-preview
