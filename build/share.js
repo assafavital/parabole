@@ -1,4 +1,5 @@
 import Pluralize from 'pluralize';
+import {ParaboleID} from "./id";
 
 export function share(attempts) {
     if (!navigator.share) {
@@ -9,8 +10,8 @@ export function share(attempts) {
 
     navigator.share({
         title: 'Parabole',
-        text: `I completed today's Parabole in ${totalAttempts} ${Pluralize('attempt', totalAttempts)}!
-${visualizeAttempts(attempts)}
+        text: `Parabole #${ParaboleID}
+${visualizeAttempts(attempts)} = ${totalAttempts}
 Play now 📈 https://parabole.servegame.com/`,
     })
         .then(console.log)
@@ -18,8 +19,8 @@ Play now 📈 https://parabole.servegame.com/`,
 }
 
 function visualizeAttempts(attempts) {
-    return '⚫'.repeat(attempts[0]) +
-        '🔴'.repeat(attempts[1]) +
-        '🟡'.repeat(attempts[2]) +
-        '🟢'.repeat(attempts[3])
+    return '⬛️'.repeat(attempts[0]) +
+        '🟥'.repeat(attempts[1]) +
+        '🟨'.repeat(attempts[2]) +
+        '🟩'.repeat(attempts[3])
 }

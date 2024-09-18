@@ -4,6 +4,7 @@ import {readGuessesSafely} from "./inputValidation";
 import {plotQuadratic} from "./plot";
 import {share} from "./share";
 import {numCorrectGuesses} from "./guesses";
+import {ParaboleID} from "./id";
 
 let a, b, c;
 let attempts = [0, 0, 0, 0];
@@ -93,6 +94,7 @@ function updateCountdown() {
 }
 
 function initializeGame() {
+    document.getElementById("paraboleId").innerText = `Parabole #${ParaboleID}`;
     generateCoefficients();
     plotQuadratic(a, b, c);
     updateStats();
