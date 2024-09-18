@@ -3,6 +3,7 @@ class State {
         this.lastSolved = s.lastSolved;
         this.totalPlayed = s.totalPlayed || 0;
         this.totalAttempts = s.totalAttempts || 0;
+        this.lastAttempts = s.lastAttempts ?? [0, 0, 0, 0];
     }
 }
 
@@ -16,6 +17,7 @@ export function loadState() {
         lastSolved: null,
         totalPlayed: 0,
         totalAttempts: 0,
+        lastAttempts: [0, 0, 0, 0]
     });
 }
 

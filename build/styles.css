@@ -133,3 +133,19 @@ button:hover {
     font-size: small;
     font-style: italic;
 }
+
+#alreadySolved {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#alreadySolvedText {
+    flex: 2;
+    text-align: center;
+}
+
+#share {
+    flex: 1;
+    text-align: center;
+}
