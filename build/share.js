@@ -9,7 +9,7 @@ export function share(attempts) {
 
     navigator.share({
         title: 'Parabole',
-        text: `I completed today's Parabole in ${Pluralize('attempt', totalAttempts)}!
+        text: `I completed today's Parabole in ${totalAttempts} ${Pluralize('attempt', totalAttempts)}!
 ${visualizeAttempts(attempts)}
 Play now 📈 https://parabole.servegame.com/`,
     })
