@@ -2,6 +2,7 @@ import {loadState, saveState, todaySolved} from "./state.js";
 import 'toastr';
 import {readGuessesSafely} from "./inputValidation";
 import {plotQuadratic} from "./plot";
+import {share} from "./share";
 
 let a, b, c;
 let attempts = 0;
@@ -44,13 +45,7 @@ function checkGuess() {
         updateStats();
         toggleVisibility(true)
         toastr.success(`Congratulations! You've solved today's Parabole: ${a}x² + ${b}x + ${c}\nYou solved it in ${attempts} attempts.`);
-        if (navigator.share) {
-            navigator.share({
-                title: 'Parabole',
-                text: `I completed today's Parabole in ${attempts} attempts!
-Play now 📈 https://parabole.servegame.com/`,
-            }).then(console.log).catch(console.error)
-        }
+        share(attempts);
     }
 }
 
