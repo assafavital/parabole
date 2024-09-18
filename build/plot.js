@@ -4,6 +4,7 @@ const plotTarget = "quadraticChart";
 const yDomainMargin = 5;
 
 export function plotQuadratic(a, b, c) {
+    const yDomain = Math.abs(c) + yDomainMargin;
     functionPlot({
         target: `#${plotTarget}`,
         width: document.getElementById("quadraticChart").offsetWidth,
@@ -13,7 +14,7 @@ export function plotQuadratic(a, b, c) {
         },
         yAxis: {
             label: 'y',
-            domain: [-(c + yDomainMargin), c + yDomainMargin]
+            domain: [-yDomain, yDomainMargin]
         },
         grid: true,
         data: [
