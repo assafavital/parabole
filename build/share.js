@@ -5,9 +5,11 @@ export function share(attempts) {
         return
     }
 
+    let totalAttempts = attempts.reduce((a, b) => a + b, 0);
+
     navigator.share({
         title: 'Parabole',
-        text: `I completed today's Parabole in ${Pluralize('attempt', attempts)}!
+        text: `I completed today's Parabole in ${Pluralize('attempt', totalAttempts)}!
 ${visualizeAttempts(attempts)}
 Play now 📈 https://parabole.servegame.com/`,
     })
