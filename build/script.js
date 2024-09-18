@@ -34,11 +34,11 @@ function checkGuess() {
     hints += getHintHTML('a', guessA, a);
     hints += getHintHTML('b', guessB, b);
     hints += getHintHTML('c', guessC, c);
-
     document.getElementById('hints').innerHTML = hints;
-    document.getElementById('attempts').textContent = `Attempts: ${attempts.reduce((a, b) => a + b)}`;
 
     const correctGuesses = numCorrectGuesses([guessA, guessB, guessC], [a, b, c]);
+    attempts[correctGuesses]++;
+    document.getElementById('attempts').textContent = `Attempts: ${attempts.reduce((a, b) => a + b)}`;
 
     if (correctGuesses === 3) {
         let numAttempts = attempts.reduce((a, b) => a + b);
