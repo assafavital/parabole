@@ -3,9 +3,10 @@ import 'toastr';
 import {readGuessesSafely} from "./inputValidation";
 import {plotQuadratic} from "./plot";
 import {share} from "./share";
+import {numCorrectGuesses} from "./guesses";
 
 let a, b, c;
-let attempts = 0;
+let attempts = [0, 0, 0, 0];
 let state = loadState();
 
 function generateCoefficients() {
@@ -28,7 +29,6 @@ function checkGuess() {
     }
 
     let [guessA, guessB, guessC] = guesses;
-    attempts++;
 
     let hints = '';
     hints += getHintHTML('a', guessA, a);
@@ -36,15 +36,18 @@ function checkGuess() {
     hints += getHintHTML('c', guessC, c);
 
     document.getElementById('hints').innerHTML = hints;
-    document.getElementById('attempts').textContent = `Attempts: ${attempts}`;
+    document.getElementById('attempts').textContent = `Attempts: ${attempts.reduce((a, b) => a + b)}`;
 
-    if (guessA === a && guessB === b && guessC === c) {
+    const correctGuesses = numCorrectGuesses([guessA, guessB, guessC], [a, b, c]);
+
+    if (correctGuesses === 3) {
+        let numAttempts = attempts.reduce((a, b) => a + b);
         state.lastSolved = new Date();
         state.totalPlayed++;
-        state.totalAttempts += attempts;
+        state.totalAttempts += numAttempts;
         updateStats();
         toggleVisibility(true)
-        toastr.success(`Congratulations! You've solved today's Parabole: ${a}x² + ${b}x + ${c}\nYou solved it in ${attempts} attempts.`);
+        toastr.success(`Congratulations! You've solved today's Parabole: ${a}x² + ${b}x + ${c}\nYou solved it in ${numAttempts} attempts.`);
         share(attempts);
     }
 }
