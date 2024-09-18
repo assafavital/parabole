@@ -1,4 +1,3 @@
-import Pluralize from 'pluralize';
 import {ParaboleID} from "./id";
 
 export function share(attempts) {
@@ -9,7 +8,6 @@ export function share(attempts) {
     let totalAttempts = attempts.reduce((a, b) => a + b, 0);
 
     navigator.share({
-        title: 'Parabole',
         text: `Parabole #${ParaboleID}
 ${visualizeAttempts(attempts)} = ${totalAttempts}
 Play now 📈 https://parabole.servegame.com/`,
@@ -24,3 +22,5 @@ function visualizeAttempts(attempts) {
         '🟨'.repeat(attempts[2]) +
         '🟩'.repeat(attempts[3])
 }
+
+document.querySelector("#share").addEventListener('click', share);

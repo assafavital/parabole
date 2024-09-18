@@ -49,7 +49,6 @@ function checkGuess() {
         updateStats();
         toggleVisibility(true)
         toastr.success(`Congratulations! You've solved today's Parabole: ${a}x² + ${b}x + ${c}\nYou solved it in ${numAttempts} attempts.`);
-        share(attempts);
     }
 }
 
