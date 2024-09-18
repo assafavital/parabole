@@ -16,8 +16,8 @@ Play now 📈 https://parabole.servegame.com/`,
 }
 
 function visualizeAttempts(attempts) {
-    return attempts[0] * '⚫' +
-        attempts[1] * '🔴' +
-        attempts[2] * '🟡' +
-        attempts[3] * '🟢'
+    return '⚫'.repeat(attempts[0]) +
+        '🔴'.repeat(attempts[1]) +
+        '🟡'.repeat(attempts[2]) +
+        '🟢'.repeat(attempts[3])
 }
