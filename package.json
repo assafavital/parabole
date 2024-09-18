@@ -2,6 +2,7 @@
   "name": "parabole",
   "version": "1.0.0",
   "description": "Daily Quadratic Game",
+  "source": "build/index.html",
   "scripts": {
     "start": "parcel ./build/*.html",
     "build": "parcel build ./build/*.html --no-scope-hoist"
