@@ -2,6 +2,7 @@ import {loadState, saveState, todaySolved} from "./state.js";
 import 'toastr';
 import {readGuessesSafely} from "./inputValidation";
 import {plotQuadratic} from "./plot";
+import {share} from "./share";
 
 let a, b, c;
 let attempts = 0;
@@ -35,7 +36,7 @@ function checkGuess() {
     hints += getHintHTML('c', guessC, c);
 
     document.getElementById('hints').innerHTML = hints;
-    document.getElementById('attempts').textContent = `Today attempts: ${attempts}`;
+    document.getElementById('attempts').textContent = `Attempts: ${attempts}`;
 
     if (guessA === a && guessB === b && guessC === c) {
         state.lastSolved = new Date();
@@ -44,6 +45,7 @@ function checkGuess() {
         updateStats();
         toggleVisibility(true)
         toastr.success(`Congratulations! You've solved today's Parabole: ${a}x² + ${b}x + ${c}\nYou solved it in ${attempts} attempts.`);
+        share(attempts);
     }
 }
 

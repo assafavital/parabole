@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "function-plot": "^1.25.0",
+    "pluralize": "^8.0.0",
     "toastr": "^2.1.4"
   }
 }
