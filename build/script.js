@@ -46,10 +46,10 @@ function checkGuess() {
         state.lastSolved = new Date();
         state.totalPlayed++;
         state.totalAttempts += numAttempts;
+        state.lastAttempts = attempts;
         updateStats();
         toggleVisibility(true)
         toastr.success(`Congratulations! You've solved today's Parabole: ${a}x² + ${b}x + ${c}\nYou solved it in ${numAttempts} attempts.`);
-        share(attempts);
     }
 }
 
@@ -94,7 +94,7 @@ function updateCountdown() {
 }
 
 function initializeGame() {
-    document.getElementById("paraboleId").innerText = `Parabole #${ParaboleID}`;
+    document.getElementById("paraboleId").textContent = `Parabole #${ParaboleID}`;
     generateCoefficients();
     plotQuadratic(a, b, c);
     updateStats();
@@ -105,7 +105,7 @@ function initializeGame() {
     };
 }
 
-window.onload = function () {
+window.onload = () => {
     if (typeof window.Math.seedrandom === 'function') {
         initializeGame();
     } else {

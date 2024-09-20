@@ -1,18 +1,18 @@
-import Pluralize from 'pluralize';
 import {ParaboleID} from "./id";
+import {loadState} from "./state";
 
-export function share(attempts) {
+export function share() {
     if (!navigator.share) {
         return
     }
 
+    const attempts = loadState().lastAttempts ?? [0, 0, 0, 0];
     let totalAttempts = attempts.reduce((a, b) => a + b, 0);
 
     navigator.share({
-        title: 'Parabole',
-        text: `Parabole #${ParaboleID}
+        text: `📈 Parabole #${ParaboleID}
 ${visualizeAttempts(attempts)} = ${totalAttempts}
-Play now 📈 https://parabole.servegame.com/`,
+https://parabole.servegame.com/`,
     })
         .then(console.log)
         .catch(console.error)
@@ -24,3 +24,5 @@ function visualizeAttempts(attempts) {
         '🟨'.repeat(attempts[2]) +
         '🟩'.repeat(attempts[3])
 }
+
+document.querySelector("#share").addEventListener("click", share)
